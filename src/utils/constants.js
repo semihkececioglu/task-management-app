@@ -67,7 +67,7 @@ export const INITIAL_STATE = {
               id: "card-1",
               title: "Welcome to Task Manager",
               description:
-                "This is your firs task. Click to edit or drag to move!",
+                "This is your first task. Click to edit or drag to move!",
               priority: PRIORITY.MEDIUM,
               dueDate: null,
               tags: ["welcome"],

@@ -25,21 +25,26 @@ export const isDueToday = (dueDate) => {
 
 // Filter cards based on search and filters
 export const filterCards = (cards, filters) => {
-  return cards.fikter((card) => {
+  return cards.filter((card) => {
     // Search filter
     const matchesSearch =
-      filters.search === "" ||
+      !filters.search ||
       card.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-      card.description.toLowerCase().includes(filters.search.toLowerCase());
+      (card.description &&
+        card.description.toLowerCase().includes(filters.search.toLowerCase()));
 
     // Priority filter
     const matchesPriority =
       filters.priority === "all" || card.priority === filters.priority;
 
-    //Tags filter
+    // Tags filter - BURAYI DÜZELTTİK
+    // Eğer filtre tag'leri boşsa veya card'ın tag'lerinden herhangi biri filtre tag'lerinde varsa
     const matchesTags =
       filters.tags.length === 0 ||
-      filters.tags.some((tag) => card.tags.includes(tag));
+      (card.tags &&
+        filters.tags.some((filterTag) => card.tags.includes(filterTag)));
+
+    return matchesSearch && matchesPriority && matchesTags;
   });
 };
 
@@ -49,7 +54,9 @@ export const getAllTags = (boards) => {
   boards.forEach((board) => {
     board.lists.forEach((list) => {
       list.cards.forEach((card) => {
-        card.tags.forEach((tag) => tags.add(tag));
+        if (card.tags && Array.isArray(card.tags)) {
+          card.tags.forEach((tag) => tags.add(tag));
+        }
       });
     });
   });
