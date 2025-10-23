@@ -24,7 +24,6 @@ const Card = memo(({ card, onClick, isDragging = false }) => {
         cursor-pointer
         hover:shadow-lg hover:shadow-indigo-100/50 dark:hover:shadow-gray-900/50
         hover:border-indigo-200 dark:hover:border-gray-600
-        hover:scale-[1.02]
         transition-all duration-300
         ${isDragging ? "opacity-50 rotate-2 scale-95" : ""}
       `}

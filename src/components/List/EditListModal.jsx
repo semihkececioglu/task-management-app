@@ -13,10 +13,10 @@ const EditListModal = ({ isOpen, onClose, list, onSave }) => {
   } = useForm();
 
   useEffect(() => {
-    if (list) {
+    if (isOpen && list) {
       reset({ title: list.title });
     }
-  }, [list, reset]);
+  }, [isOpen, list, reset]);
 
   const onSubmit = (data) => {
     onSave(list.id, data.title);
@@ -45,11 +45,20 @@ const EditListModal = ({ isOpen, onClose, list, onSave }) => {
           autoFocus
         />
 
-        <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" variant="secondary" onClick={handleClose}>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={handleClose}
+            className="w-full sm:w-auto sm:min-w-[100px] order-1"
+          >
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-full sm:w-auto sm:min-w-[100px] order-2"
+          >
             Save Changes
           </Button>
         </div>

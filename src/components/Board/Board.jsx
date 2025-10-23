@@ -145,7 +145,7 @@ const Board = ({
       <div className="h-full flex flex-col">
         {/* Board Header */}
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+          <h2 className="text-3xl font-thin text-gray-900 dark:text-white tracking-tight">
             {board.title}
           </h2>
           {hasActiveFilters && (

@@ -39,11 +39,20 @@ const AddListModal = ({ isOpen, onClose, onSave }) => {
           autoFocus
         />
 
-        <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" variant="secondary" onClick={handleClose}>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={handleClose}
+            className="w-full sm:w-auto sm:min-w-[100px] order-1"
+          >
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-full sm:w-auto sm:min-w-[100px] order-2"
+          >
             Add List
           </Button>
         </div>

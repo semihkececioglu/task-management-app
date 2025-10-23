@@ -1,19 +1,19 @@
 import { useState, useCallback, useEffect } from "react";
 import { TaskProvider, useTask } from "./context/TaskContext";
-import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import { ToastProvider, useToast } from "./context/ToastContext";
 import { ACTIONS } from "./utils/constants";
-import { Moon, Sun, Search } from "lucide-react";
 import Board from "./components/Board/Board";
 import CardModal from "./components/Card/CardModal";
 import AddListModal from "./components/List/AddListModal";
 import EditListModal from "./components/List/EditListModal";
 import FilterBar from "./components/Layout/FilterBar";
+import Header from "./components/Layout/Header";
+import ConfirmModal from "./components/UI/ConfirmModal";
 import { useDebounce } from "./hooks/useDebounce";
 
 function AppContent() {
   const { state, dispatch, getActiveBoard, getAllTags } = useTask();
-  const { isDark, toggleTheme } = useTheme();
   const toast = useToast();
 
   // Search state
@@ -24,9 +24,11 @@ function AppContent() {
   const [isCardModalOpen, setIsCardModalOpen] = useState(false);
   const [isAddListModalOpen, setIsAddListModalOpen] = useState(false);
   const [isEditListModalOpen, setIsEditListModalOpen] = useState(false);
+  const [showDeleteListConfirm, setShowDeleteListConfirm] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedListId, setSelectedListId] = useState(null);
   const [selectedList, setSelectedList] = useState(null);
+  const [listToDelete, setListToDelete] = useState(null);
 
   const activeBoard = getActiveBoard();
   const availableTags = getAllTags();
@@ -117,28 +119,25 @@ function AppContent() {
   const handleDeleteList = useCallback(
     (listId) => {
       const list = activeBoard?.lists.find((l) => l.id === listId);
-      const cardCount = list?.cards.length || 0;
-
-      const message =
-        cardCount > 0
-          ? `Delete "${list.title}" and its ${cardCount} card${
-              cardCount > 1 ? "s" : ""
-            }?`
-          : `Delete "${list.title}"?`;
-
-      if (window.confirm(message)) {
-        dispatch({
-          type: ACTIONS.DELETE_LIST,
-          payload: {
-            boardId: state.activeBoard,
-            listId,
-          },
-        });
-        toast.success("List deleted successfully!");
-      }
+      setListToDelete(list);
+      setShowDeleteListConfirm(true);
     },
-    [dispatch, state.activeBoard, toast, activeBoard]
+    [activeBoard]
   );
+
+  const confirmDeleteList = useCallback(() => {
+    if (listToDelete) {
+      dispatch({
+        type: ACTIONS.DELETE_LIST,
+        payload: {
+          boardId: state.activeBoard,
+          listId: listToDelete.id,
+        },
+      });
+      toast.success("List deleted successfully!");
+      setListToDelete(null);
+    }
+  }, [dispatch, state.activeBoard, toast, listToDelete]);
 
   const handleAddCard = useCallback((listId) => {
     setSelectedListId(listId);
@@ -225,92 +224,12 @@ function AppContent() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-dark-bg transition-colors duration-200">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 transition-colors duration-300">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 sticky top-0 z-10 shadow-sm">
-        <div className="container mx-auto flex items-center justify-between">
-          {/* Logo & Title */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-md">
-              <span className="text-white font-bold text-xl">T</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                Task Manager
-              </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Organize your work efficiently
-              </p>
-            </div>
-          </div>
-
-          {/* Search */}
-          <div className="flex-1 max-w-md mx-8">
-            <div className="relative">
-              <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={18}
-              />
-              <input
-                type="text"
-                placeholder="Search tasks..."
-                value={searchInput}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                className="
-                  w-full pl-10 pr-4 py-2 
-                  bg-gray-100 dark:bg-gray-700 
-                  rounded-lg 
-                  text-gray-900 dark:text-gray-100
-                  placeholder-gray-400 dark:placeholder-gray-500
-                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white dark:focus:bg-gray-800
-                  transition-all duration-200
-                "
-              />
-              {searchInput && debouncedSearch !== searchInput && (
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400">
-                  searching...
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="
-              p-2 rounded-lg 
-              hover:bg-gray-100 dark:hover:bg-gray-700 
-              transition-colors
-              group
-            "
-            title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-          >
-            {isDark ? (
-              <Sun
-                size={20}
-                className="text-gray-300 group-hover:text-yellow-400 transition-colors"
-              />
-            ) : (
-              <Moon
-                size={20}
-                className="text-gray-700 group-hover:text-blue-600 transition-colors"
-              />
-            )}
-          </button>
-        </div>
-      </header>
+      <Header onSearchChange={handleSearchChange} searchValue={searchInput} />
 
       {/* Main Content */}
-      <main className="container mx-auto p-4 h-[calc(100vh-88px)]">
-        {/* Filter Bar */}
-        <FilterBar
-          filters={state.filters}
-          onPriorityChange={handlePriorityChange}
-          onTagChange={handleTagChange}
-          onClearFilters={handleClearFilters}
-          availableTags={availableTags}
-        />
-
+      <main className="container mx-auto px-6 py-6 h-[calc(100vh-88px)]">
         {/* Board */}
         <Board
           board={activeBoard}
@@ -323,6 +242,15 @@ function AppContent() {
           onDeleteList={handleDeleteList}
         />
       </main>
+
+      {/* Filter Sidebar */}
+      <FilterBar
+        filters={state.filters}
+        onPriorityChange={handlePriorityChange}
+        onTagChange={handleTagChange}
+        onClearFilters={handleClearFilters}
+        availableTags={availableTags}
+      />
 
       {/* Modals */}
       <AddListModal
@@ -344,6 +272,28 @@ function AppContent() {
         card={selectedCard}
         onSave={handleSaveCard}
         onDelete={handleDeleteCard}
+      />
+
+      <ConfirmModal
+        isOpen={showDeleteListConfirm}
+        onClose={() => {
+          setShowDeleteListConfirm(false);
+          setListToDelete(null);
+        }}
+        onConfirm={confirmDeleteList}
+        title="Delete List"
+        message={
+          listToDelete
+            ? `Are you sure you want to delete "${listToDelete.title}"${
+                listToDelete.cards?.length > 0
+                  ? ` and its ${listToDelete.cards.length} card${
+                      listToDelete.cards.length > 1 ? "s" : ""
+                    }`
+                  : ""
+              }? This action cannot be undone.`
+            : ""
+        }
+        variant="danger"
       />
     </div>
   );
