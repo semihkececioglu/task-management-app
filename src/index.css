@@ -3,21 +3,31 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-dark-bg: #1a1a2e;
-  --color-dark-card: #16213e;
-  --color-dark-border: #0f3460;
+  --color-dark-bg: #0a0a0f;
+  --color-dark-card: #131318;
+  --color-dark-border: #1f1f26;
   --color-dark-text: #e4e4e7;
+  --color-accent: #6366f1;
+  --color-accent-hover: #4f46e5;
+}
+
+/* Font Family */
+* {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
 }
 
 /* Body için dark mode desteği */
 body {
-  @apply bg-gray-50 dark:bg-dark-bg;
+  @apply bg-white dark:bg-dark-bg;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  @apply min-h-screen bg-gray-50 dark:bg-dark-bg;
+  @apply min-h-screen bg-white dark:bg-dark-bg;
 }
 
 /* Custom Animations */
@@ -64,10 +74,10 @@ body {
   animation: scale-in 0.2s ease-out;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Modern & Minimal */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -75,25 +85,26 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Smooth transitions */
 * {
-  transition-property: background-color, border-color, color, fill, stroke;
+  transition-property: background-color, border-color, color, fill, stroke,
+    box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition-duration: 200ms;
 }

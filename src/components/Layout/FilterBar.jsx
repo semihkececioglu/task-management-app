@@ -29,15 +29,15 @@ const FilterBar = ({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <Filter size={18} className="text-gray-600 dark:text-gray-400" />
-          <h3 className="font-semibold text-gray-900 dark:text-white">
+    <div className="bg-white/80 dark:bg-gray-800/40 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl p-5 mb-5">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2.5">
+          <Filter size={18} className="text-gray-500 dark:text-gray-400" />
+          <h3 className="font-bold text-gray-900 dark:text-white tracking-tight">
             Filters
           </h3>
           {hasActiveFilters && (
-            <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs">
+            <span className="px-2.5 py-0.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-lg text-xs font-semibold">
               Active
             </span>
           )}
@@ -50,22 +50,24 @@ const FilterBar = ({
         )}
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {/* Priority Filter */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 tracking-tight">
             Priority
           </label>
           <select
             value={filters.priority}
             onChange={(e) => onPriorityChange(e.target.value)}
             className="
-              w-full px-3 py-2 
-              bg-white dark:bg-gray-800 
-              border border-gray-300 dark:border-gray-600 
-              rounded-lg 
+              w-full px-4 py-2.5
+              bg-gray-50 dark:bg-gray-800/50
+              border border-gray-200 dark:border-gray-700
+              rounded-xl
               text-gray-900 dark:text-gray-100
-              focus:outline-none focus:ring-2 focus:ring-blue-500
+              focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-300 dark:focus:border-indigo-600
+              transition-all duration-300
+              font-medium text-[15px]
             "
           >
             {priorityOptions.map((option) => (
@@ -79,7 +81,7 @@ const FilterBar = ({
         {/* Tags Filter */}
         {availableTags.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 tracking-tight">
               Tags
             </label>
             <div className="flex flex-wrap gap-2">
@@ -90,12 +92,12 @@ const FilterBar = ({
                     key={tag}
                     onClick={() => toggleTag(tag)}
                     className={`
-                      px-3 py-1 rounded-full text-sm font-medium
-                      transition-all duration-200
+                      px-3 py-1.5 rounded-xl text-sm font-semibold
+                      transition-all duration-300
                       ${
                         isSelected
-                          ? "bg-blue-500 text-white shadow-md"
-                          : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                          ? "bg-indigo-500 text-white shadow-lg shadow-indigo-200/50 dark:shadow-indigo-900/30 scale-105"
+                          : "bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600/50 border border-gray-200/50 dark:border-gray-600/30"
                       }
                     `}
                   >

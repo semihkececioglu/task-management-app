@@ -33,7 +33,7 @@ const Modal = ({ isOpen, onClose, title, children, size = "md" }) => {
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
@@ -42,30 +42,32 @@ const Modal = ({ isOpen, onClose, title, children, size = "md" }) => {
         <div
           className={`
             relative w-full ${sizes[size]}
-            bg-white dark:bg-gray-800 
-            rounded-lg shadow-xl 
+            bg-white dark:bg-gray-800/95
+            backdrop-blur-xl
+            rounded-2xl shadow-2xl 
+            border border-gray-200/50 dark:border-gray-700/50
             transform transition-all
-            animate-fade-in
+            animate-scale-in
           `}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="flex items-center justify-between p-5 border-b border-gray-200/50 dark:border-gray-700/50">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight">
               {title}
             </h3>
             <Button
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="rounded-full p-1"
+              className="rounded-xl p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50"
             >
               <X size={20} />
             </Button>
           </div>
 
           {/* Content */}
-          <div className="p-4">{children}</div>
+          <div className="p-5">{children}</div>
         </div>
       </div>
     </div>

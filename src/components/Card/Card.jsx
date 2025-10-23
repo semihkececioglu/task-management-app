@@ -18,31 +18,33 @@ const Card = memo(({ card, onClick, isDragging = false }) => {
       onClick={onClick}
       className={`
         group
-        bg-white dark:bg-gray-800 
-        border border-gray-200 dark:border-gray-700
-        rounded-lg p-3 
+        bg-white dark:bg-gray-800/60
+        border border-gray-100 dark:border-gray-700/50
+        rounded-xl p-4
         cursor-pointer
-        hover:shadow-md hover:border-blue-300 dark:hover:border-blue-600
-        transition-all duration-200
-        ${isDragging ? "opacity-50 rotate-3" : ""}
+        hover:shadow-lg hover:shadow-indigo-100/50 dark:hover:shadow-gray-900/50
+        hover:border-indigo-200 dark:hover:border-gray-600
+        hover:scale-[1.02]
+        transition-all duration-300
+        ${isDragging ? "opacity-50 rotate-2 scale-95" : ""}
       `}
     >
       {/* Drag Handle */}
-      <div className="flex items-start gap-2">
+      <div className="flex items-start gap-3">
         <GripVertical
-          size={16}
-          className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing flex-shrink-0 mt-1"
+          size={18}
+          className="text-gray-300 dark:text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing flex-shrink-0 mt-0.5"
         />
 
         <div className="flex-1 min-w-0">
           {/* Title */}
-          <h4 className="font-medium text-gray-900 dark:text-white mb-2 line-clamp-2">
+          <h4 className="font-semibold text-[15px] text-gray-900 dark:text-white mb-2 line-clamp-2 tracking-tight">
             {card.title}
           </h4>
 
           {/* Description preview */}
           {card.description && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2 leading-relaxed">
               {card.description}
             </p>
           )}
@@ -52,7 +54,7 @@ const Card = memo(({ card, onClick, isDragging = false }) => {
             {/* Priority Badge */}
             <span
               className={`
-                px-2 py-1 rounded-full font-medium
+                px-2.5 py-1 rounded-lg font-medium tracking-wide
                 ${priorityColor.bg} ${priorityColor.text}
               `}
             >
@@ -61,8 +63,10 @@ const Card = memo(({ card, onClick, isDragging = false }) => {
 
             {/* Due Date */}
             {card.dueDate && (
-              <div className={`flex items-center gap-1 ${getDueDateColor()}`}>
-                <Clock size={12} />
+              <div
+                className={`flex items-center gap-1.5 ${getDueDateColor()} font-medium`}
+              >
+                <Clock size={13} />
                 <span>{formatDate(card.dueDate)}</span>
               </div>
             )}
@@ -70,19 +74,20 @@ const Card = memo(({ card, onClick, isDragging = false }) => {
 
           {/* Tags */}
           {card.tags && card.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-2">
+            <div className="flex flex-wrap gap-1.5 mt-3">
               {card.tags.map((tag, index) => (
                 <span
                   key={index}
                   className="
                     inline-flex items-center gap-1
-                    px-2 py-0.5 
-                    bg-gray-100 dark:bg-gray-700 
-                    text-gray-700 dark:text-gray-300
-                    rounded text-xs
+                    px-2 py-1
+                    bg-gray-50 dark:bg-gray-700/50
+                    text-gray-600 dark:text-gray-300
+                    rounded-lg text-xs font-medium
+                    border border-gray-200/50 dark:border-gray-600/30
                   "
                 >
-                  <Tag size={10} />
+                  <Tag size={11} />
                   {tag}
                 </span>
               ))}

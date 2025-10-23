@@ -9,22 +9,23 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed tracking-tight";
 
   const variants = {
     primary:
-      "bg-blue-500 hover:bg-blue-600 text-white shadow-sm hover:shadow-md",
+      "bg-indigo-600 hover:bg-indigo-700 text-white shadow-md hover:shadow-lg hover:shadow-indigo-200/50 dark:hover:shadow-indigo-900/30 hover:scale-[1.02]",
     secondary:
-      "bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200",
-    danger: "bg-red-500 hover:bg-red-600 text-white shadow-sm hover:shadow-md",
+      "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/50 dark:hover:bg-gray-600/50 text-gray-700 dark:text-gray-200 border border-gray-200/50 dark:border-gray-600/30 hover:border-gray-300 dark:hover:border-gray-500/50",
+    danger:
+      "bg-red-500 hover:bg-red-600 text-white shadow-md hover:shadow-lg hover:shadow-red-200/50 dark:hover:shadow-red-900/30 hover:scale-[1.02]",
     ghost:
-      "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300",
+      "hover:bg-gray-100/80 dark:hover:bg-gray-800/50 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white",
   };
 
   const sizes = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2 text-base",
-    lg: "px-6 py-3 text-lg",
+    sm: "px-3 py-2 text-sm",
+    md: "px-4 py-2.5 text-[15px]",
+    lg: "px-6 py-3 text-base",
   };
 
   return (

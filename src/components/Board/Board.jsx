@@ -144,12 +144,12 @@ const Board = ({
     >
       <div className="h-full flex flex-col">
         {/* Board Header */}
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
             {board.title}
           </h2>
           {hasActiveFilters && (
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="text-sm text-gray-500 dark:text-gray-400 font-medium px-3 py-1.5 bg-gray-100/80 dark:bg-gray-800/50 rounded-lg border border-gray-200/50 dark:border-gray-700/50">
               Showing filtered results
             </div>
           )}
@@ -157,9 +157,9 @@ const Board = ({
 
         {/* Empty state for filters */}
         {hasActiveFilters && !hasCards && (
-          <div className="flex items-center justify-center h-64 bg-white dark:bg-gray-800 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
+          <div className="flex items-center justify-center h-64 bg-white/50 dark:bg-gray-800/30 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700">
             <div className="text-center">
-              <p className="text-gray-500 dark:text-gray-400 text-lg mb-2">
+              <p className="text-gray-600 dark:text-gray-300 text-lg mb-2 font-semibold">
                 No cards match your filters
               </p>
               <p className="text-sm text-gray-400 dark:text-gray-500">
@@ -171,7 +171,7 @@ const Board = ({
 
         {/* Lists Container - Horizontal Scroll */}
         <div className="flex-1 overflow-x-auto overflow-y-hidden">
-          <div className="flex gap-4 h-full pb-4">
+          <div className="flex gap-5 h-full pb-4">
             {/* Lists - FİLTRELENMİŞ listeleri kullan */}
             {filteredLists.map((list) => (
               <DroppableList
@@ -190,7 +190,7 @@ const Board = ({
                 variant="secondary"
                 size="md"
                 onClick={onAddList}
-                className="w-full justify-start hover:shadow-md transition-shadow"
+                className="w-full justify-start hover:shadow-lg transition-all h-fit"
               >
                 <Plus size={20} className="mr-2" />
                 Add another list
