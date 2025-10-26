@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { X, Plus } from "lucide-react";
 
-const TagInput = ({ tags = [], onChange, placeholder = "Add tags..." }) => {
+const TagInput = ({ tags = [], onTagsChange, placeholder = "Add tags..." }) => {
   const [input, setInput] = useState("");
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && input.trim()) {
       e.preventDefault();
       if (!tags.includes(input.trim())) {
-        onChange([...tags, input.trim()]);
+        onTagsChange([...tags, input.trim()]);
       }
       setInput("");
     } else if (e.key === "Backspace" && !input && tags.length > 0) {
-      onChange(tags.slice(0, -1));
+      onTagsChange(tags.slice(0, -1));
     }
   };
 
   const removeTag = (tagToRemove) => {
-    onChange(tags.filter((tag) => tag !== tagToRemove));
+    onTagsChange(tags.filter((tag) => tag !== tagToRemove));
   };
 
   return (
