@@ -1,16 +1,112 @@
-# React + Vite
+# Task Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Kanban-style task management application built with React. Features drag-and-drop functionality, real-time search, and dark mode.
 
-Currently, two official plugins are available:
+![Task Manager](./preview.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Drag and drop cards between lists
+- Real-time search across all tasks
+- Filter by priority and tags
+- Dark/Light mode with system preference detection
+- LocalStorage persistence
+- Responsive design
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React 18 + Vite
+- Tailwind CSS v4
+- @dnd-kit (Drag & Drop)
+- Context API + useReducer
+- react-hook-form
+- date-fns
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Installation
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/task-management-app.git
+
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+```
+
+## Usage
+
+- **Create List:** Click "Add another list"
+- **Add Card:** Click "Add a card" in any list
+- **Edit Card:** Click on any card
+- **Drag & Drop:** Drag cards between lists
+- **Search:** Use the search bar in header
+- **Filter:** Use priority and tag filters
+- **Dark Mode:** Toggle with the sun/moon icon
+
+## Build
+```bash
+npm run build
+npm run preview
+```
+
+## Project Structure
+```
+task-management-app/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── Board/
+│   │   │   └── Board.jsx
+│   │   ├── List/
+│   │   │   ├── DroppableList.jsx
+│   │   │   ├── AddListModal.jsx
+│   │   │   ├── EditListModal.jsx
+│   │   │   └── ListMenu.jsx
+│   │   ├── Card/
+│   │   │   ├── Card.jsx
+│   │   │   ├── DraggableCard.jsx
+│   │   │   └── CardModal.jsx
+│   │   ├── UI/
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Textarea.jsx
+│   │   │   ├── Dropdown.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── TagInput.jsx
+│   │   │   ├── Toast.jsx
+│   │   │   ├── LoadingSpinner.jsx
+│   │   │   ├── EmptyState.jsx
+│   │   │   └── SkeletonCard.jsx
+│   │   └── Layout/
+│   │       └── FilterBar.jsx
+│   ├── context/
+│   │   ├── TaskContext.jsx
+│   │   ├── ThemeContext.jsx
+│   │   └── ToastContext.jsx
+│   ├── reducers/
+│   │   └── taskReducer.js
+│   ├── hooks/
+│   │   ├── useLocalStorage.js
+│   │   ├── useDebounce.js
+│   │   └── useFilteredCards.js
+│   ├── utils/
+│   │   ├── constants.js
+│   │   └── helpers.js
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── .gitignore
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+└── README.md
+```
+
+## License
+
+MIT
+
+## Author
+
+[Your Name](https://github.com/yourusername)
